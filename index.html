@@ -103,7 +103,7 @@
 				requestAnimationFrame( animate );
 
 				render();
-				stats.update();
+				// stats.update();
 
 			}
 
@@ -134,6 +134,9 @@
 
 			}
 
+			window.addEventListener('resize', function(event){
+				onWindowResize()
+			});
 		</script>
 	</body>
 </html>
