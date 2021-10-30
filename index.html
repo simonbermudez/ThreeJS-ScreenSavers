@@ -23,6 +23,8 @@
 	<body>
 		<script src="build/three.min.js"></script>
 
+		<script src="js/controls/OrbitControls.js"></script>
+
 		<script src="js/loaders/OBJLoader.js"></script>
 
 		<script src="js/Detector.js"></script>
@@ -34,9 +36,10 @@
 
 			var camera, scene, renderer,
 			light1, light2, light3, light4,
-			object, stats;
+			object, stats, controls;
 
 			var clock = new THREE.Clock();
+			
 
 			init();
 			animate();
@@ -86,6 +89,8 @@
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				document.body.appendChild( renderer.domElement );
+
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 			}
 
