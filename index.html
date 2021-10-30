@@ -12,6 +12,13 @@
 				75% {color: lightgreen;}
 				100%   {color: cyan;}
 			}
+
+			@keyframes change_colors_2 {
+				0%  {color: white;}
+				50%   {color: cyan;}
+				100% {color: white;}
+			}
+
 			body {
 				font-family: Monospace;
 				margin: 0px;
@@ -21,11 +28,12 @@
 			}
 			.info {
 				position: fixed;
-				background-color: rgba(0, 0, 0, 0);
 				padding: 20px;
 			}
 			a {
-				color: cyan;
+				animation-name: change_colors_2;
+				animation-duration: 3s;
+				animation-iteration-count: infinite;
 			}
 
 			.top {
@@ -70,11 +78,11 @@
 		</div>
 
 		<div class="info bottom left">
-			<i class="far fa-file-alt"></i>
+			<a href="https://docs.google.com/document/d/1lnzOdCqcqq-CdyQAy-avOWt560XXlrrOxjScahsQXAA/edit?usp=sharing"><i class="far fa-file-alt"></i></a>
 		</div>
 
 		<div class="info bottom right">
-			<i class="fab fa-github"></i>
+			<a href="https://github.com/iandtek"><i class="fab fa-github"></i></a>
 		</div>
 
 		<script src="build/three.min.js"></script>
