@@ -5,10 +5,49 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
+			@keyframes change_colors {
+				0%   {color: cyan;}
+				25%  {color: yellow;}
+				50%  {color: purple;}
+				75% {color: lightgreen;}
+				100%   {color: cyan;}
+			}
 			body {
 				font-family: Monospace;
 				margin: 0px;
 				overflow: hidden;
+				color: white;
+				font-size: 20px;
+			}
+			.info {
+				position: fixed;
+				background-color: rgba(0, 0, 0, 0);
+				padding: 20px;
+			}
+			a {
+				color: cyan;
+			}
+
+			.top {
+				top: 0;
+			}
+
+			.bottom {
+				bottom: 0;
+			}
+
+			.left {
+				left: 0;
+			}
+
+			.right {
+				right: 0;
+			}
+
+			span {
+				animation-name: change_colors;
+				animation-duration: 7s;
+				animation-iteration-count: infinite;
 			}
 		</style>
 	</head>
@@ -19,8 +58,25 @@
 
 	gtag('config', 'UA-118601206-1');
 	</script>
-
+	<script src="https://kit.fontawesome.com/8bdc125945.js" crossorigin="anonymous"></script>
 	<body>
+
+		<div class="info top left">
+			<span>S</span>imon <br><span>B</span>ermudez
+		</div>
+
+		<div class="info top right">
+			<a href="https://simonbermudez.com/wp"><i class="fas fa-globe-americas"></i></a>
+		</div>
+
+		<div class="info bottom left">
+			<i class="far fa-file-alt"></i>
+		</div>
+
+		<div class="info bottom right">
+			<i class="fab fa-github"></i>
+		</div>
+
 		<script src="build/three.min.js"></script>
 
 		<script src="js/controls/OrbitControls.js"></script>
@@ -59,6 +115,14 @@
 					object = obj;
 					object.scale.multiplyScalar( 300 );
 					object.position.y = - 15;
+					
+					// Adding Material
+					// object.traverse(function(child) {
+					// 	if (child instanceof THREE.Mesh){
+					// 		child.material = logo_material;
+					// 	}
+					// });
+					// var logo = new THREE.Mesh(object, logo_material)
 					scene.add( object );
 
 				} );
