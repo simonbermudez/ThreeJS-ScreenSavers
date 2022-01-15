@@ -30,10 +30,26 @@
 				position: fixed;
 				padding: 20px;
 			}
-			a {
+			a, #menu-button {
 				animation-name: change_colors_2;
-				animation-duration: 3s;
+				animation-duration: 1.25s;
 				animation-iteration-count: infinite;
+			}
+
+			.delay-1 {
+				animation-delay: 250ms;
+			}
+			.delay-2 {
+				animation-delay: 500ms;
+			}
+			.delay-3 {
+				animation-delay: 750ms;
+			}
+			.delay-4 {
+				animation-delay: 1s;
+			}
+			.delay-5 {
+				animation-delay: 1.25s;
 			}
 
 			.top {
@@ -61,34 +77,84 @@
 			.brand {
 				font-size: 20px;
 			}
+
+			.menu {
+				position: absolute;
+				margin-left: 10%;
+				margin-right: 10%;
+				margin-top: 10vh;
+				left: 0;
+				right: 0;
+				background-color: rgba(0, 0, 0, 0.47);
+				font-size: 30px;
+			}
+			.menu a {
+				text-decoration: none;
+			}
+
+			ul {
+				list-style: none;
+			}
 		</style>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-77QT2KBZ2V"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-77QT2KBZ2V');
+        </script>
 	</head>
 	<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-	gtag('config', 'UA-118601206-1');
+		gtag('config', 'UA-118601206-1');
+	</script>
+	<script
+		src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+		crossorigin="anonymous">
 	</script>
 	<script src="https://kit.fontawesome.com/8bdc125945.js" crossorigin="anonymous"></script>
 	<body>
+		<script>
+			$(document).ready(function() {
+				$("#menu-button").click(function(){
+					$('#menu').slideToggle()
+				})
+			})
+		</script>
+
+		<div id="menu" class="menu" style="display: none;">
+			<ul>
+				<li><a class="delay-1" href="https://docs.google.com/document/d/1lnzOdCqcqq-CdyQAy-avOWt560XXlrrOxjScahsQXAA/edit">Resume</a></li>
+				<li><a class="delay-2" href="https://simonbermudez.com/wp/portfolio/">Portfolio</a></li>
+				<li><a class="delay-3" href="https://github.com/simonbermudez">Github</a></li>
+				<li><a class="delay-4" href="https://www.linkedin.com/in/simonbermudez/">LinkedIn</a></li>
+				<li><a class="delay-5" href="http://simonbermudez.com/wp/awards">Awards</a></li>
+			</ul>
+		</div>
 
 		<div class="info top left">
+			<a href="https://simonbermudez.com/simonbermudez.vcf"><i class="fa fa-address-book"></i></a>
+		</div>
+
+		<div class="info top right">
+			<i id="menu-button" class="fa fa-receipt" ></i>
+		</div>
+
+
+		<div class="info bottom left">
 			<div class="brand">
 				<span>S</span>imon <br><span>B</span>ermudez
 			</div>
 		</div>
 
-		<div class="info top right">
-			<a href="https://simonbermudez.com/wp"><i class="fas fa-globe-americas"></i></a>
-		</div>
-
-		<div class="info bottom left">
-			<a href="https://docs.google.com/document/d/1lnzOdCqcqq-CdyQAy-avOWt560XXlrrOxjScahsQXAA/edit?usp=sharing"><i class="far fa-file-alt"></i></a>
-		</div>
-
 		<div class="info bottom right">
-			<a href="https://github.com/iandtek"><i class="fab fa-github"></i></a>
+			<a href="https://simonbermudez.com/wp"><i class="fas fa-info-circle"></i></a>
 		</div>
 
 		<script src="build/three.min.js"></script>
