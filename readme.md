@@ -1,5 +1,5 @@
-# Three.js Starter
-Courtesy of Bruno Simon of https://threejs-journey.xyz/
+# Three.js Simon Bermudez Logo 
+Live Deployment [Node.js](https://simonbermudez.com/logo).
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
