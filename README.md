@@ -1,2 +1,2 @@
-# ThreeJS-Andtek-Logo
+# ThreeJS-Logo
 This the implementation of the ThreeJS logo
