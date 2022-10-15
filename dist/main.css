@@ -82,10 +82,21 @@ a, #menu-button {
     right: 0;
 }
 
+.middle {
+    left: 100px;
+    right: 100px; 
+}
+
 span {
     animation-name: change_colors;
     animation-duration: 7s;
     animation-iteration-count: infinite;
+}
+
+.role {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 7px;
 }
 
 .brand {
