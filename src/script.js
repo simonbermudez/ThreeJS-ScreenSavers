@@ -35,14 +35,6 @@ function init() {
         object = obj;
         object.scale.multiplyScalar( 300 );
         object.position.y = - 15;
-        
-        // Adding Material
-        // object.traverse(function(child) {
-        // 	if (child instanceof THREE.Mesh){
-        // 		child.material = logo_material;
-        // 	}
-        // });
-        // var logo = new THREE.Mesh(object, logo_material)
         scene.add( object );
 
     } );
@@ -126,7 +118,8 @@ function init() {
     composer.addPass(bloomPass);
 	composer.addPass(glitchPass);
 
-    setTimeout(() => composer.removePass(glitchPass), 1000)
+    
+    setTimeout(() => composer.removePass(glitchPass), 2000)
     // composer.addPass( halftonePass );
 
 
