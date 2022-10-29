@@ -10,12 +10,20 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { HalftonePass } from 'three/examples/jsm/postprocessing/HalftonePass';
 import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass';
 
-var camera, scene, renderer,
+let camera, scene, renderer,
 light1, light2, light3, light4, light5, light6, light7,
 object, stats, controls, composer, renderPass, bloomPass, glitchPass;
 
-var clock = new THREE.Clock();
+let clock = new THREE.Clock();
 
+let SEPARATION = 50, AMOUNTX = 50, AMOUNTY = 100;
+
+let particles, count = 0;
+
+let mouseX = 0, mouseY = 0;
+
+let windowHalfX = window.innerWidth / 2;
+let windowHalfY = window.innerHeight / 2;
 
 init();
 animate();
@@ -23,9 +31,55 @@ animate();
 function init() {
 
     camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
-    camera.position.z = 100;
+    camera.position.x = 0;
+    camera.position.y = 25;
+    camera.position.z = 165;
     scene = new THREE.Scene();
 
+//
+
+    const numParticles = AMOUNTX * AMOUNTY;
+
+    const positions = new Float32Array( numParticles * 3 );
+    const scales = new Float32Array( numParticles );
+
+    let i = 0, j = 0;
+
+    for ( let ix = 0; ix < AMOUNTX; ix ++ ) {
+
+        for ( let iy = 0; iy < AMOUNTY; iy ++ ) {
+
+            positions[ i ] = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 ); // x
+            positions[ i + 1 ] = -20; // y
+            positions[ i + 2 ] = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 ); // z
+
+            scales[ j ] = 1;
+
+            i += 3;
+            j ++;
+
+        }
+
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+    geometry.setAttribute( 'scale', new THREE.BufferAttribute( scales, 1 ) );
+
+    const material = new THREE.ShaderMaterial( {
+
+        uniforms: {
+            color: { value: new THREE.Color( 0xaaaaaa ) },
+        },
+        vertexShader: document.getElementById( 'vertexshader' ).textContent,
+        fragmentShader: document.getElementById( 'fragmentshader' ).textContent
+
+    } );
+
+    //
+
+    particles = new THREE.Points( geometry, material );
+    scene.add( particles );
 
     //model
 
@@ -33,18 +87,18 @@ function init() {
     loader.load( 'https://simonbermudez.com/logo/models/sb.obj', function ( obj ) {
 
         object = obj;
-        object.scale.multiplyScalar( 300 );
-        object.position.y = - 15;
+        object.scale.multiplyScalar( 500 );
+        object.position.y = 0;
         scene.add( object );
 
     } );
 
     var sphere = new THREE.SphereBufferGeometry( 0.5, 16, 8 );
 
-    /* floor  */    
-    const helper = new THREE.GridHelper( 1000, 40, 0x303030, 0x303030 );
-    helper.position.y = - 25;
-    scene.add( helper );
+    // /* floor  */    
+    // const helper = new THREE.GridHelper( 1000, 40, 0x303030, 0x303030 );
+    // helper.position.y = - 25;
+    // scene.add( helper );
 
 
     //lights
@@ -152,32 +206,61 @@ function render() {
     if( object ) object.rotation.y -= 0.5 * delta;
 
     light1.position.x = Math.sin( time * 0.7 ) * 30;
-    light1.position.y = Math.cos( time * 0.5 ) * 40;
+    light1.position.y = Math.cos( time * 0.5 ) * 50;
     light1.position.z = Math.cos( time * 0.3 ) * 30;
 
     light2.position.x = Math.cos( time * 0.3 ) * 30;
-    light2.position.y = Math.sin( time * 0.5 ) * 40;
+    light2.position.y = Math.sin( time * 0.5 ) * 50;
     light2.position.z = Math.sin( time * 0.7 ) * 30;
 
     light3.position.x = Math.sin( time * 0.7 ) * 30;
-    light3.position.y = Math.cos( time * 0.3 ) * 40;
+    light3.position.y = Math.cos( time * 0.3 ) * 50;
     light3.position.z = Math.sin( time * 0.5 ) * 30;
 
     light4.position.x = Math.sin( time * 0.3 ) * 30;
-    light4.position.y = Math.cos( time * 0.7 ) * 40;
+    light4.position.y = Math.cos( time * 0.7 ) * 50;
     light4.position.z = Math.sin( time * 0.5 ) * 30;
 
     light5.position.x = Math.sin( time * 0.1 ) * 30;
-    light5.position.y = Math.cos( time * 0.2 ) * 40;
+    light5.position.y = Math.cos( time * 0.2 ) * 50;
     light5.position.z = Math.sin( time * 0.3 ) * 30;
 
     light6.position.x = Math.sin( time * 0.4 ) * 30;
-    light6.position.y = Math.cos( time * 0.5 ) * 40;
+    light6.position.y = Math.cos( time * 0.5 ) * 50;
     light6.position.z = Math.sin( time * 0.6 ) * 30;
+
+
+    const positions = particles.geometry.attributes.position.array;
+    const scales = particles.geometry.attributes.scale.array;
+
+    let i = 0, j = 0;
+
+    for ( let ix = 0; ix < AMOUNTX; ix ++ ) {
+
+        for ( let iy = 0; iy < AMOUNTY; iy ++ ) {
+
+            positions[ i + 1 ] = ( Math.sin( ( ix + count ) * 0.3 ) * 10 ) +
+                            ( Math.sin( ( iy + count ) * 0.5 ) * 10 );
+
+            scales[ j ] = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 10 +
+                            ( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 10;
+
+            i += 3;
+            j ++;
+
+        }
+
+    }
+
+    particles.geometry.attributes.position.needsUpdate = true;
+    particles.geometry.attributes.scale.needsUpdate = true;
+
+    particles.position.y = -20 
 
     renderer.render( scene, camera );
 
     composer.render()
+    count += 0.1;
 
 }
 
