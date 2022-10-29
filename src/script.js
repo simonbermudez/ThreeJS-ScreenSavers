@@ -12,20 +12,23 @@ import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass';
 
 var camera, scene, renderer,
 light1, light2, light3, light4, light5, light6, light7,
-object, stats, controls, composer, renderPass, bloomPass, glitchPass;
+object, stats, controls, composer, renderPass, bloomPass, glitchPass, 
+uniforms1;
 
 var clock = new THREE.Clock();
-
 
 init();
 animate();
 
 function init() {
 
-    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.z = 100;
     scene = new THREE.Scene();
 
+    uniforms1 = {
+        'time': { value: 1.0 }
+    };
 
     //model
 
@@ -33,8 +36,24 @@ function init() {
     loader.load( 'https://simonbermudez.com/logo/models/sb.obj', function ( obj ) {
 
         object = obj;
+        
+        const material = new THREE.ShaderMaterial( {
+
+            uniforms: uniforms1,
+            vertexShader: document.getElementById( 'vertexShader' ).textContent,
+            fragmentShader: document.getElementById( 'fragment_shader4' ).textContent
+
+        } );
+
+        object.traverse( function( child ) {
+            if ( child instanceof THREE.Mesh ) {
+                child.material = material;
+            }
+        } );
+
         object.scale.multiplyScalar( 300 );
         object.position.y = - 15;
+
         scene.add( object );
 
     } );
@@ -148,6 +167,8 @@ function render() {
 
     var time = Date.now() * 0.0005;
     var delta = clock.getDelta();
+
+    uniforms1[ 'time' ].value += delta * 5;
 
     if( object ) object.rotation.y -= 0.5 * delta;
 
